@@ -1,9 +1,13 @@
+
+clone the repo into ~/.config
+add private/ to this directory containing
+  - bashrc_private - aliases and envs for bash
+
 run:
 
 `rm ~/.vimrc`
 `rm -rf ~/.config/nvim`
 `rm ~/.bashrc`
-`rm ~/.bashrc_private`
 `rm ~/.tmux.conf`
 
 //These assume you cloned this repo into ~/.config.
