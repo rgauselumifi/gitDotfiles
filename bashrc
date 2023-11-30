@@ -108,5 +108,3 @@ fi
   source ~/.bashrc_private
 fi
 
-
-eval "$(starship init bash)"

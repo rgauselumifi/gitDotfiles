@@ -133,7 +133,6 @@ set.cursorline = true
 set.undofile = true
 set.swapfile = false
 set.updatetime = 50
-set.modifiable = true
 set.guicursor = ""
 set.mouse = "" --enable selecting text with mouse for copy/paste
 set.autoindent = true
