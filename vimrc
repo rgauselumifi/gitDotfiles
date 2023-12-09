@@ -1,9 +1,15 @@
-  set path+=src/**
+"TODO fix clipboard
+set showcmd
+
 filetype plugin on
+runtime macros/matchit.vim
+
+set path=.,,,src/**
 set wildignore+=*/node_modules/*
+set wildmenu
+set wildchar=<C-n>
 set number
 set relativenumber
-set wildmenu
 set nobackup
 set nowritebackup
 set updatetime=300
@@ -12,7 +18,6 @@ set encoding=utf-8
 set undodir=~/.vim/undo
 set undofile
 set noswapfile
-"TODO fix clipboard
 set autoindent
 set smartindent
 set tabstop=2
@@ -31,25 +36,25 @@ set grepprg=rg\ --vimgrep
 set grepformat^=%f:%l:%c:%m
 set autoread
 set timeoutlen=1000
-set ttimeoutlen=0
-colorscheme slate
+set ttimeoutlen=100
+set backspace=indent,eol,start
+set mouse=a
 
 let mapleader = " "
 
 "plugins
 call plug#begin()
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'editorconfig/editorconfig-vim'
+Plug 'tpope/vim-commentary'
 call plug#end()
 
-inoremap <silent><expr> <TAB>
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+let g:coc_global_extensions = ['coc-prettier', 'coc-html','coc-lua', 'coc-json', 'coc-tsserver', 'coc-git', 'coc-css', 'coc-tailwindcss', 'coc-vimlsp']
+
+inoremap <silent><expr> <C-n>
       \ coc#pum#visible() ? coc#pum#next(1) :
-      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
 
 nmap <silent> [d <Plug>(coc-diagnostic-prev)
 nmap <silent> ]d <Plug>(coc-diagnostic-next)
@@ -79,69 +84,68 @@ augroup mygroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
-" Example: `<leader>aap` for current paragraph
-xmap ,a  <Plug>(coc-codeaction-selected)
-" nmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap ,a  <Plug>(coc-codeaction-cursor)
-nmap ,A  <Plug>(coc-codeaction-source)
-nmap ,qf  <Plug>(coc-fix-current)
-nmap <silent> ,r <Plug>(coc-codeaction-refactor)
-xmap <silent> ,r  <Plug>(coc-codeaction-refactor-selected)
-nmap <silent> ,R  <Plug>(coc-codeaction-refactor-selected)
-nmap ,l  <Plug>(coc-codelens-action)
+ " Example: `<leader>aap` for current paragraph
+ xmap ,a  <Plug>(coc-codeaction-selected)
+ " nmap <leader>a  <Plug>(coc-codeaction-selected)
+ nmap ,a  <Plug>(coc-codeaction-cursor)
+ nmap ,A  <Plug>(coc-codeaction-source)
+ nmap ,qf  <Plug>(coc-fix-current)
+ nmap <silent> ,r <Plug>(coc-codeaction-refactor)
+ xmap <silent> ,r  <Plug>(coc-codeaction-refactor-selected)
+ nmap <silent> ,R  <Plug>(coc-codeaction-refactor-selected)
+ nmap ,l  <Plug>(coc-codelens-action)
 
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
+ nmap <silent> <C-s> <Plug>(coc-range-select)
+ xmap <silent> <C-s> <Plug>(coc-range-select)
 
-" Remap <C-d> and <C-u> to scroll float windows/popups
-if has('nvim-0.4.0') || has('patch-8.2.0750')
-  nnoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  nnoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  inoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  inoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  vnoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  vnoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-endif
+ command! -nargs=0 Format :call CocActionAsync('format')
+ nmap ,F :Format<cr>
+ command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+ nnoremap <silent><nowait> ,d  :<C-u>CocList diagnostics<cr>
+ nnoremap <silent><nowait> ,e  :<C-u>CocList extensions<cr>
+ nnoremap <silent><nowait> ,c  :<C-u>CocList commands<cr>
+ nnoremap <silent><nowait> ,o  :<C-u>CocList outline<cr>
+ nnoremap <silent><nowait> ,s  :<C-u>CocList -I symbols<cr>
+ nnoremap <silent><nowait> ,j  :<C-u>CocNext<CR>
+ nnoremap <silent><nowait> ,k  :<C-u>CocPrev<CR>
+ nnoremap <silent><nowait> ,p  :<C-u>CocListResume<CR>
 
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
+ nnoremap <leader>z :vsplit $MYVIMRC<cr>
+ nnoremap <leader>Z :so $MYVIMRC<cr>
+ nnoremap <leader>n :noh<CR>
+ nnoremap <leader>N :vnew \| setlocal nobuflisted buftype=nofile bufhidden=wipe noswapfile<cr>
+ nnoremap <leader>p :Ex<CR>
+ nnoremap <leader>f :find *
+ nnoremap <leader>g :silent grep! -i  \| cwindow \| redraw!<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+ nnoremap <leader>c :cwindow<CR>
+ nnoremap <leader>C :ccl<CR>
+ nnoremap [c :cp<CR>
+ nnoremap ]c :cn<CR>
+ nnoremap [C :cfirst<CR>
+ nnoremap ]C :clast<CR>
+ nnoremap [b :bp<CR>
+ nnoremap ]b :bn<CR>
+ nnoremap [t :tp<CR>
+ nnoremap ]t :tn<CR>
+ nnoremap <leader>b :ls<CR>:buffer<Space>
 
-" TODO format on save
-command! -nargs=0 Format :call CocActionAsync('format')
-" autocmd BufWritePre * call Format()
-nmap ,F :Format<cr>
+ vnoremap J :m '>+1<cr>gv=gv
+ vnoremap K :m '<-2<cr>gv=gv
 
-" Add `:OR` command for organize imports of the current buffer
-command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+ inoremap {<cr> {<cr>}<esc>O
+ inoremap [<cr> [<cr>]<esc>O
+ inoremap (<cr> (<cr>)<esc>O
+ inoremap {, {<cr>},<esc>O
+ inoremap [, [<cr>],<esc>O
+ inoremap (, (<cr>),<esc>O
+ inoremap {; {<cr>};<esc>O
+ inoremap [; [<cr>];<esc>O
+ inoremap (; (<cr>);<esc>O
 
-nnoremap <silent><nowait> ,d  :<C-u>CocList diagnostics<cr>
-nnoremap <silent><nowait> ,e  :<C-u>CocList extensions<cr>
-nnoremap <silent><nowait> ,c  :<C-u>CocList commands<cr>
-nnoremap <silent><nowait> ,o  :<C-u>CocList outline<cr>
-nnoremap <silent><nowait> ,s  :<C-u>CocList -I symbols<cr>
-nnoremap <silent><nowait> ,j  :<C-u>CocNext<CR>
-nnoremap <silent><nowait> ,k  :<C-u>CocPrev<CR>
-nnoremap <silent><nowait> ,p  :<C-u>CocListResume<CR>
+ autocmd ColorScheme * hi ModeMsg cterm=NONE ctermbg=green ctermfg=black
+                 \ | hi Search cterm=NONE ctermbg=yellow ctermfg=black
+                 \ | hi IncSearch cterm=NONE ctermbg=red ctermfg=black
+                 \ | hi Visual cterm=NONE ctermbg=white ctermfg=darkblue
 
-nnoremap <leader>n :noh<CR>
-nnoremap <leader>p :Ex<CR>
-nnoremap <leader>f :find *
-nnoremap <leader>g :silent grep! -i  \| cwindow \| redraw!<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
-nnoremap <leader>c :cwindow<CR>
-nnoremap <leader>C :ccl<CR>
-nnoremap [c :cp<CR>
-nnoremap ]c :cn<CR>
-nnoremap [C :cfirst<CR>
-nnoremap ]C :clast<CR>
-nnoremap <leader>b :ls<CR>:buffer<Space>
 
-highlight QuickFixLine ctermbg=20
-highlight Search ctermfg=white ctermbg=20
-highlight IncSearch ctermfg=red ctermbg=20
+ colorscheme slate
