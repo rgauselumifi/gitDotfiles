@@ -108,3 +108,6 @@ fi
   source ~/.bashrc_private
 fi
 
+
+
+PATH=~/.console-ninja/.bin:$PATH

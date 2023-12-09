@@ -33,7 +33,6 @@ require("lazy").setup({
 			})
 		end,
 	},
-	{ "nvim-treesitter/nvim-treesitter-context", opts = { max_lines = 7 } },
 	"JoosepAlviste/nvim-ts-context-commentstring",
 	{ "folke/neodev.nvim", opts = {} },
 	{ "williamboman/mason.nvim" },
@@ -57,7 +56,7 @@ require("lazy").setup({
 			},
 			format_on_save = {
 				-- These options will be passed to conform.format()
-				timeout_ms = 500,
+				timeout_ms = 100,
 				lsp_fallback = true,
 			},
 		},
@@ -80,21 +79,9 @@ require("lazy").setup({
 			require("nvim-surround").setup({})
 		end,
 	},
-	{
-		"windwp/nvim-autopairs",
-		event = "InsertEnter",
-		opts = {},
-	},
 	{ "windwp/nvim-ts-autotag", opts = {} },
-
 	"lewis6991/gitsigns.nvim",
 	"github/copilot.vim",
-	{
-		"ibhagwan/fzf-lua",
-		config = function()
-			require("fzf-lua").setup({ "max-perf", winopts = { fullscreen = true } })
-		end,
-	},
 })
 
 --MAPS
@@ -102,18 +89,25 @@ local keymap = vim.keymap.set
 keymap("n", "Q", "<nop>")
 keymap("n", "<leader>p", ":Ex<cr>")
 keymap("n", "<leader>f", ":find *")
-keymap("n", "<leader>g", ":vim '' **/*<Left><Left><Left><Left><Left><Left>")
+keymap("n", "<leader>g", ":silent grep!  | cwindow<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>")
+keymap("n", "<leader>b", ":ls<cr>:b<space>")
 keymap("n", "<leader>n", ":noh<cr>")
-keymap("n", "<leader>/", ":g//#<Left><Left>")
+keymap("n", "<leader>/", ":g//<Left>")
+keymap("i", "{<cr>", "{<cr>}<esc>O")
+keymap("i", "[<cr>", "[<cr>]<esc>O")
+keymap("i", "(<cr>", "(<cr>)<esc>O")
+keymap("i", "{,", "{<cr>},<esc>O")
+keymap("n", "<leader>N", ":vnew | setlocal nobuflisted buftype=nofile bufhidden=wipe noswapfile<cr>")
+keymap("i", "[,", "[<cr>],<esc>O")
+keymap("i", "(,", "(<cr>),<esc>O")
 keymap("v", "J", ":m '>+1<CR>gv=gv")
 keymap("v", "K", ":m '<-2<CR>gv=gv")
-keymap("n", "<leader>q", ":copen<cr>")
-keymap("n", "<leader>Q", ":ccl<cr>")
-keymap("n", "<leader>d", ":lua vim.diagnostic.setqflist()<cr>")
-keymap("n", "[q", ":cp<cr>")
-keymap("n", "]q", ":cn<cr>")
-keymap("n", "[f", ":colder<cr>")
-keymap("n", "]f", ":cnewer<cr>")
+keymap("n", "<leader>c", ":cwindow<cr>")
+keymap("n", "<leader>C", ":ccl<cr>")
+keymap("n", "[c", ":cp<cr>")
+keymap("n", "]c", ":cn<cr>")
+keymap("n", "[C", ":cfirst<cr>")
+keymap("n", "]C", ":clast<cr>")
 keymap("n", "]b", ":bnext<cr>")
 keymap("n", "[b", ":bprevious<cr>")
 keymap("n", "[t", ":tp<cr>")
@@ -123,11 +117,14 @@ keymap("n", "]T", ":tl<cr>")
 
 --OPTIONS
 local set = vim.opt
-set.path:append("**")
 set.wildignore = "**/node_modules/**, **lazy-lock.json"
+set.wildignorecase = true
 set.clipboard:append("unnamedplus")
+set.path:append("src/**")
 set.wildmenu = true
 set.backup = false
+set.number = true
+set.relativenumber = true
 set.fileencoding = "utf-8"
 set.cursorline = true
 set.undofile = true
@@ -148,6 +145,8 @@ set.smartcase = true
 set.wrap = false
 set.scrolloff = 8
 set.hidden = true
+set.grepprg = "rg --vimgrep --no-heading --smart-case"
+set.grepformat = "%f:%l:%c:%m"
 
 --GIT
 require("gitsigns").setup({
@@ -161,9 +160,9 @@ require("gitsigns").setup({
 		end
 
 		-- Navigation
-		map("n", "]c", function()
+		map("n", "]h", function()
 			if vim.wo.diff then
-				return "]c"
+				return "]h"
 			end
 			vim.schedule(function()
 				gs.next_hunk()
@@ -171,9 +170,9 @@ require("gitsigns").setup({
 			return "<Ignore>"
 		end, { expr = true })
 
-		map("n", "[c", function()
+		map("n", "[h", function()
 			if vim.wo.diff then
-				return "[c"
+				return "[h"
 			end
 			vim.schedule(function()
 				gs.prev_hunk()
