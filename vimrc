@@ -143,10 +143,5 @@ augroup end
  inoremap [; [<cr>];<esc>O
  inoremap (; (<cr>);<esc>O
 
- autocmd ColorScheme * hi ModeMsg cterm=NONE ctermbg=green ctermfg=black
-                 \ | hi Search cterm=NONE ctermbg=yellow ctermfg=black
-                 \ | hi IncSearch cterm=NONE ctermbg=red ctermfg=black
-                 \ | hi Visual cterm=NONE ctermbg=white ctermfg=darkblue
-
 
  colorscheme slate
