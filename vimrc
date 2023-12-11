@@ -48,10 +48,12 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
+Plug 'ojroques/vim-oscyank', {'branch': 'main'}
 call plug#end()
 
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 let g:coc_global_extensions = ['coc-prettier', 'coc-html','coc-lua', 'coc-json', 'coc-tsserver', 'coc-git', 'coc-css', 'coc-tailwindcss', 'coc-vimlsp']
+
 
 inoremap <silent><expr> <C-n>
       \ coc#pum#visible() ? coc#pum#next(1) :
@@ -143,5 +145,8 @@ augroup end
  inoremap [; [<cr>];<esc>O
  inoremap (; (<cr>);<esc>O
 
+ nmap <leader>Y <Plug>OSCYankOperator
+ nmap <leader>yy <leader>Y_
+ vmap <leader>y <Plug>OSCYankVisual
 
  colorscheme slate
