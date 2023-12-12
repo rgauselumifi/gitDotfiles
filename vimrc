@@ -8,6 +8,7 @@ set path=.,,,src/**
 set wildignore+=*/node_modules/*
 set wildmenu
 set wildchar=<C-n>
+set termguicolors
 set nonumber
 set norelativenumber
 set nobackup
