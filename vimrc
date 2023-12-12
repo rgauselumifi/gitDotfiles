@@ -52,7 +52,7 @@ Plug 'ojroques/vim-oscyank', {'branch': 'main'}
 call plug#end()
 
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
-let g:coc_global_extensions = ['coc-prettier', 'coc-html','coc-lua', 'coc-json', 'coc-tsserver', 'coc-git', 'coc-css', 'coc-tailwindcss', 'coc-vimlsp']
+let g:coc_global_extensions = ['coc-prettier', 'coc-html','coc-lua', 'coc-json', 'coc-tsserver', 'coc-css', 'coc-tailwindcss', 'coc-vimlsp']
 
 
 inoremap <silent><expr> <C-n>
@@ -130,7 +130,6 @@ augroup end
  nnoremap ]b :bn<CR>
  nnoremap [t :tp<CR>
  nnoremap ]t :tn<CR>
- nnoremap <leader>b :ls<CR>:buffer<Space>
 
  vnoremap J :m '>+1<cr>gv=gv
  vnoremap K :m '<-2<cr>gv=gv
