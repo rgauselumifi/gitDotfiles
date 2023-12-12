@@ -8,8 +8,8 @@ set path=.,,,src/**
 set wildignore+=*/node_modules/*
 set wildmenu
 set wildchar=<C-n>
-set number
-set relativenumber
+set nonumber
+set norelativenumber
 set nobackup
 set nowritebackup
 set updatetime=300
@@ -149,4 +149,5 @@ augroup end
  nmap <leader>yy <leader>Y_
  vmap <leader>y <Plug>OSCYankVisual
 
+ set tagfunc=CocTagFunc
  colorscheme slate
