@@ -10,6 +10,7 @@ set wildmenu
 set wildchar=<C-n>
 set number
 set relativenumber
+set termguicolors
 set nobackup
 set nowritebackup
 set updatetime=300
