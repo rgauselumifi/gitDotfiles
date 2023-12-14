@@ -127,10 +127,6 @@ augroup end
  nnoremap ]c :cn<CR>
  nnoremap [C :cfirst<CR>
  nnoremap ]C :clast<CR>
- nnoremap [b :bp<CR>
- nnoremap ]b :bn<CR>
- nnoremap [t :tp<CR>
- nnoremap ]t :tn<CR>
 
  vnoremap J :m '>+1<cr>gv=gv
  vnoremap K :m '<-2<cr>gv=gv
