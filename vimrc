@@ -147,3 +147,4 @@ augroup end
 
  set tagfunc=CocTagFunc
  colorscheme slate
+ colorscheme retrobox
