@@ -104,10 +104,21 @@ if ! shopt -oq posix; then
   fi
 fi
 
+alias cdd='cd ~/lumifi'
+alias cdw='cd /mnt/c/Users/RyanGause'
+alias cdc='cd ~/.config/gitDotfiles/'
+
+export PATH="~/.local/bin:$PATH"
+export PATH="~/.local/bin/vim/src:$PATH"
+export PATH="~/.local/nvim/usr/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
  if [ -f ~/.bashrc_private ]; then
   source ~/.bashrc_private
 fi
 
 
 
-PATH=~/.console-ninja/.bin:$PATH
