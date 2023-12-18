@@ -1,4 +1,4 @@
-"TODO fix clipboard
+"options
 set showcmd
 
 filetype plugin on
@@ -52,9 +52,9 @@ Plug 'tpope/vim-surround'
 Plug 'ojroques/vim-oscyank', {'branch': 'main'}
 call plug#end()
 
-let g:coc_global_extensions = ['coc-prettier', 'coc-html','coc-lua', 'coc-json', 'coc-tsserver', 'coc-css', 'coc-tailwindcss', 'coc-vimlsp']
 
-
+"Coc
+let g:coc_global_extensions = ['coc-html', 'coc-json', 'coc-tsserver']
 inoremap <silent><expr> <C-n>
       \ coc#pum#visible() ? coc#pum#next(1) :
       \ coc#refresh()
@@ -76,43 +76,20 @@ function! ShowDocumentation()
 endfunction
 
 nmap ,n <Plug>(coc-rename)
-xmap ,f  <Plug>(coc-format-selected)
-nmap ,f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
-  " Setup formatexpr specified filetype(s)
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
- " Example: `<leader>aap` for current paragraph
  xmap ,a  <Plug>(coc-codeaction-selected)
- " nmap <leader>a  <Plug>(coc-codeaction-selected)
  nmap ,a  <Plug>(coc-codeaction-cursor)
  nmap ,A  <Plug>(coc-codeaction-source)
- nmap ,qf  <Plug>(coc-fix-current)
  nmap <silent> ,r <Plug>(coc-codeaction-refactor)
  xmap <silent> ,r  <Plug>(coc-codeaction-refactor-selected)
- nmap <silent> ,R  <Plug>(coc-codeaction-refactor-selected)
- nmap ,l  <Plug>(coc-codelens-action)
 
- nmap <silent> <C-s> <Plug>(coc-range-select)
- xmap <silent> <C-s> <Plug>(coc-range-select)
 
- command! -nargs=0 Format :call CocActionAsync('format')
- nmap ,F :Format<cr>
- command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
- nnoremap <silent><nowait> ,d  :<C-u>CocList diagnostics<cr>
- nnoremap <silent><nowait> ,e  :<C-u>CocList extensions<cr>
- nnoremap <silent><nowait> ,c  :<C-u>CocList commands<cr>
- nnoremap <silent><nowait> ,o  :<C-u>CocList outline<cr>
- nnoremap <silent><nowait> ,s  :<C-u>CocList -I symbols<cr>
- nnoremap <silent><nowait> ,j  :<C-u>CocNext<CR>
- nnoremap <silent><nowait> ,k  :<C-u>CocPrev<CR>
- nnoremap <silent><nowait> ,p  :<C-u>CocListResume<CR>
-
+ "maps
  nnoremap <leader>z :vsplit $MYVIMRC<cr>
  nnoremap <leader>Z :so $MYVIMRC<cr>
  nnoremap <leader>n :noh<CR>
@@ -126,6 +103,8 @@ augroup end
  nnoremap ]c :cn<CR>
  nnoremap [C :cfirst<CR>
  nnoremap ]C :clast<CR>
+ nnoremap <leader>me :compiler eslint<cr>:silent make  \| cwindow \| redraw!<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+ nnoremap ,f mmgggqG`m
 
  vnoremap J :m '>+1<cr>gv=gv
  vnoremap K :m '<-2<cr>gv=gv
