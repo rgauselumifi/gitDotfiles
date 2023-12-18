@@ -52,7 +52,6 @@ Plug 'tpope/vim-surround'
 Plug 'ojroques/vim-oscyank', {'branch': 'main'}
 call plug#end()
 
-let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 let g:coc_global_extensions = ['coc-prettier', 'coc-html','coc-lua', 'coc-json', 'coc-tsserver', 'coc-css', 'coc-tailwindcss', 'coc-vimlsp']
 
 
@@ -147,4 +146,3 @@ augroup end
 
  set tagfunc=CocTagFunc
  colorscheme slate
- colorscheme retrobox
