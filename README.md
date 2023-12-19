@@ -1,22 +1,13 @@
 clone the repo into ~/.config
-
-add private/ to this directory containing
-  - bashrc_private - any extra env variables
-
 run:
+apt update && apt upgrade -y
+apt install -y ansible
+apt install -y git
 
-`rm ~/.vimrc`
-`rm ~/.bashrc`
+in home directory:
 
-//These assume you cloned this repo into ~/.config.
+`ansible-playbook setup.yml`
 
-`ln -s ~/.config/gitDotfiles/vim/vimrc ~/.vimrc`
-`ln -s ~/.config/gitDotfiles/vim/after ~/.vim/after`
-`ln -s ~/.config/gitDotfiles/vim/coc-settings.json ~/.vim/coc-settings.json`
+when booting vim for first time, run:
 
-`ln -s ~/.config/gitDotfiles/bashrc ~/.bashrc`
-
-//if you made bashrc_private
-`ln -s ~/.config/gitDotfiles/private/bashrc_private ~/.bashrc_private`
-
-
+`:PlugInstall`
