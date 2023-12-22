@@ -1,3 +1,9 @@
 {
   "suggest.autoTrigger": "trigger",
+  "diagnostic.enable": false,
+  "codeLens.enable": false,
+  "diagnostic.autoRefresh": false,
+  "pullDiagnostic.onSave": false,
+  "pullDiagnostic.onChange": false,
+  "pullDiagnostic.workspace": false,
 }

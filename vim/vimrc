@@ -7,6 +7,7 @@ runtime macros/matchit.vim
 set path=.,,,src/**
 set wildignore+=*/node_modules/*
 set wildmenu
+set belloff=all
 set wildchar=<C-n>
 set termguicolors
 set nonumber
@@ -23,7 +24,10 @@ set autoindent
 set smartindent
 set tabstop=2
 set softtabstop=2
+set signcolumn=no
 set shiftwidth=2
+set splitright
+set splitbelow
 set expandtab
 set incsearch
 set hlsearch
@@ -50,8 +54,13 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'ojroques/vim-oscyank', {'branch': 'main'}
+Plug 'takac/vim-hardtime'
+Plug 'ericbn/vim-solarized'
 call plug#end()
 
+let g:hardtime_default_on = 1
+let g:hardtime_allow_different_key = 1
+nnoremap <leader>h :HardTimeToggle<cr>
 
 "Coc
 let g:coc_global_extensions = ['coc-html', 'coc-json', 'coc-tsserver']
@@ -59,8 +68,6 @@ inoremap <silent><expr> <C-n>
       \ coc#pum#visible() ? coc#pum#next(1) :
       \ coc#refresh()
 
-nmap <silent> [d <Plug>(coc-diagnostic-prev)
-nmap <silent> ]d <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
@@ -92,10 +99,13 @@ augroup end
  "maps
  nnoremap <leader>z :vsplit $MYVIMRC<cr>
  nnoremap <leader>Z :so $MYVIMRC<cr>
- nnoremap <leader>n :noh<CR>
+ nnoremap <c-l> :noh<CR>:redraw!<cr>
  nnoremap <leader>N :vnew \| setlocal nobuflisted buftype=nofile bufhidden=wipe noswapfile<cr>
  nnoremap <leader>p :Ex<CR>
  nnoremap <leader>f :find *
+ nnoremap <BS> <C-^>
+ nnoremap <leader>b :buffer *
+ nnoremap <leader>B :ls<cr>:b 
  nnoremap <leader>g :silent grep! -i  \| cwindow \| redraw!<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
  nnoremap <leader>c :cwindow<CR>
  nnoremap <leader>C :ccl<CR>
@@ -105,6 +115,8 @@ augroup end
  nnoremap ]C :clast<CR>
  nnoremap <leader>me :compiler eslint<cr>:silent make  \| cwindow \| redraw!<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
  nnoremap ,f mmgggqG`m
+ nnoremap H ^
+ nnoremap L $
 
  vnoremap J :m '>+1<cr>gv=gv
  vnoremap K :m '<-2<cr>gv=gv
@@ -124,4 +136,5 @@ augroup end
  vmap <leader>y <Plug>OSCYankVisual
 
  set tagfunc=CocTagFunc
- colorscheme slate
+ colorscheme torte
+ silent! colorscheme solarized
