@@ -3,6 +3,7 @@
   "diagnostic.enable": false,
   "codeLens.enable": false,
   "diagnostic.autoRefresh": false,
+  "hover.target": "float",
   "pullDiagnostic.onSave": false,
   "pullDiagnostic.onChange": false,
   "pullDiagnostic.workspace": false,
