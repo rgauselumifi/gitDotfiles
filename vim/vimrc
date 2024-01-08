@@ -1,5 +1,6 @@
 filetype plugin on
 runtime macros/matchit.vim
+packadd! editorconfig
 
 "options
 set path=.,,,src/**,packages/**,apps/**
@@ -51,7 +52,7 @@ let mapleader = " "
 "plugins
 call plug#begin()
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'editorconfig/editorconfig-vim'
+" Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'ojroques/vim-oscyank', {'branch': 'main'}
