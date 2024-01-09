@@ -83,8 +83,6 @@ augroup end
  nnoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 
  "maps
- nnoremap <leader>z :vsplit $MYVIMRC<cr>
- nnoremap <leader>Z :so $MYVIMRC<cr>
  nnoremap <leader>N :vnew \| setlocal nobuflisted buftype=nofile bufhidden=wipe noswapfile<cr>
  nnoremap <c-k> :cp<CR>
  nnoremap <c-j> :cn<CR>
@@ -110,5 +108,5 @@ augroup end
  vmap <leader>y <Plug>OSCYankVisual
 
  set tagfunc=CocTagFunc
- colorscheme torte
+ set background=dark
  silent! colorscheme solarized
