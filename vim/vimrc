@@ -81,8 +81,6 @@ nmap ,r <Plug>(coc-references)
  nmap ,a  <Plug>(coc-codeaction-cursor)
  nmap ,A  <Plug>(coc-codeaction-source)
  nmap <leader>d :CocDiagnostics<cr>
- nmap <silent> [d <Plug>(coc-diagnostic-prev)
- nmap <silent> ]d <Plug>(coc-diagnostic-next)
  nnoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-d>zz"
  nnoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-u>zz"
 
@@ -90,6 +88,9 @@ nmap ,r <Plug>(coc-references)
  imap <C-L> <Plug>(copilot-accept-word)
 
  "maps
+ nnoremap <leader>p :Explore<cr>
+ nnoremap <leader>b :b 
+ nnoremap ,b :ls<cr>:b 
  nnoremap <leader>f :find 
  nnoremap <leader>g :grep 
  nnoremap <leader>z :e $MYVIMRC<cr>
@@ -101,7 +102,10 @@ nmap ,r <Plug>(coc-references)
  nnoremap ]a :n<cr>
  nnoremap <c-p> :lprevious<CR>
  nnoremap <c-n> :lnext<CR>
+ nnoremap <leader>c :cw<cr>
+ nnoremap <leader>l :lw<cr>
  nnoremap ,f mmgggqG`m
+ nnoremap ' `
 
  vnoremap J :m '>+1<cr>gv=gv
  vnoremap K :m '<-2<cr>gv=gv
