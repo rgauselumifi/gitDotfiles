@@ -57,6 +57,9 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'ojroques/vim-oscyank', {'branch': 'main'}
 Plug 'ericbn/vim-solarized'
+Plug 'suy/vim-context-commentstring'
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'github/copilot.vim'
 call plug#end()
 
 "Coc
@@ -68,26 +71,30 @@ inoremap <silent><expr> <C-n>
 nnoremap <silent> K :call ShowDocumentation()<CR>
 function! ShowDocumentation()
   if CocAction('hasProvider', 'hover')
-    call CocActionAsync('definitionHover')
+    call CocActionAsync('doHover')
   else
     call feedkeys('K', 'in')
   endif
 endfunction
 nmap ,n <Plug>(coc-rename)
-augroup mygroup
-  autocmd!
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
+nmap ,r <Plug>(coc-references)
  nmap ,a  <Plug>(coc-codeaction-cursor)
  nmap ,A  <Plug>(coc-codeaction-source)
  nmap <leader>d :CocDiagnostics<cr>
- nnoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
- nnoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+ nmap <silent> [d <Plug>(coc-diagnostic-prev)
+ nmap <silent> ]d <Plug>(coc-diagnostic-next)
+ nnoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-d>zz"
+ nnoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-u>zz"
+
+ "copilot
+ imap <C-L> <Plug>(copilot-accept-word)
 
  "maps
+ nnoremap <leader>f :find 
+ nnoremap <leader>g :grep 
+ nnoremap <leader>z :e $MYVIMRC<cr>
+ nnoremap <leader>Z :so $MYVIMRC<cr>
  nnoremap <leader>N :vnew \| setlocal nobuflisted buftype=nofile bufhidden=wipe noswapfile<cr>
- nnoremap <c-d> <c-d>zz
- nnoremap <c-u> <c-u>zz
  nnoremap <c-k> :cp<CR>
  nnoremap <c-j> :cn<CR>
  nnoremap [a :prev<cr>
