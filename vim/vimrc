@@ -105,7 +105,7 @@ nmap ,r <Plug>(coc-references)
  nnoremap ]a :n<cr>
  nnoremap ]b :bnext<cr>
  nnoremap [b :bprevious<cr>
- nnoremap <c-h> <c-^>
+ nnoremap <bs> <c-^>
  nnoremap <c-p> :lprevious<CR>
  nnoremap <c-n> :lnext<CR>
  nnoremap <leader>c :cw<cr>
