@@ -111,6 +111,7 @@ alias cdc='cd ~/.config/gitDotfiles/'
 export PATH="~/.local/bin:$PATH"
 export PATH="~/.local/bin/vim/src:$PATH"
 export PATH="~/.local/nvim/usr/bin:$PATH"
+alias cat='bat'
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

@@ -60,6 +60,7 @@ Plug 'ericbn/vim-solarized'
 Plug 'suy/vim-context-commentstring'
 Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'github/copilot.vim'
+Plug 'romainl/vim-cool'
 call plug#end()
 
 "Coc
@@ -88,6 +89,8 @@ nmap ,r <Plug>(coc-references)
  imap <C-L> <Plug>(copilot-accept-word)
 
  "maps
+ inoremap jk <esc>
+ inoremap kj <esc>
  nnoremap <leader>p :Explore<cr>
  nnoremap <leader>b :b 
  nnoremap ,b :ls<cr>:b 
@@ -100,12 +103,16 @@ nmap ,r <Plug>(coc-references)
  nnoremap <c-j> :cn<CR>
  nnoremap [a :prev<cr>
  nnoremap ]a :n<cr>
+ nnoremap ]b :bnext<cr>
+ nnoremap [b :bprevious<cr>
+ nnoremap <c-h> <c-^>
  nnoremap <c-p> :lprevious<CR>
  nnoremap <c-n> :lnext<CR>
  nnoremap <leader>c :cw<cr>
  nnoremap <leader>l :lw<cr>
  nnoremap ,f mmgggqG`m
  nnoremap ' `
+ nnoremap <leader>/ :g//#<left><left>
 
  vnoremap J :m '>+1<cr>gv=gv
  vnoremap K :m '<-2<cr>gv=gv

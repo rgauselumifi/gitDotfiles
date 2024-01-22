@@ -80,54 +80,63 @@ require("lazy").setup({
 		end,
 	},
 	{ "windwp/nvim-ts-autotag", opts = {} },
-	"lewis6991/gitsigns.nvim",
 	"github/copilot.vim",
+    {
+    'maxmx03/solarized.nvim',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.o.background = 'dark' -- or 'light'
+
+      vim.cmd.colorscheme 'solarized'
+    end,
+  },
 })
 
 --MAPS
 local keymap = vim.keymap.set
 keymap("n", "Q", "<nop>")
+keymap("i", "jk", "<esc>")
+keymap("i", "kj", "<esc>")
 keymap("n", "<leader>p", ":Ex<cr>")
-keymap("n", "<leader>f", ":find *")
-keymap("n", "<leader>g", ":silent grep!  | cwindow<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>")
-keymap("n", "<leader>b", ":ls<cr>:b<space>")
-keymap("n", "<leader>n", ":noh<cr>")
-keymap("n", "<leader>/", ":g//<Left>")
+keymap("n", "<leader>f", ":find ")
+keymap("n", "<leader>g", ":grep ")
+keymap("n", "<leader>b", ":b ")
+keymap("n", "<leader>/", ":g//#<Left><Left>")
+keymap("n", "<leader>N", ":vnew | setlocal nobuflisted buftype=nofile bufhidden=wipe noswapfile<cr>")
+keymap("v", "J", ":m '>+1<CR>gv=gv")
+keymap("v", "K", ":m '<-2<CR>gv=gv")
+keymap("n", "<leader>c", ":cwindow<cr>")
+keymap("n", "<leader>l", ":lw<cr>")
+keymap("n", "<c-k>", ":cp<cr>")
+keymap("n", "<c-j>", ":cn<cr>")
+keymap("n", "<c-p>", ":lp<cr>")
+keymap("n", "<c-n>", ":ln<cr>")
+keymap("n", "]b", ":bnext<cr>")
+keymap("n", "[b", ":bprevious<cr>")
+keymap("n", "]a", ":next<cr>")
+keymap("n", "[a", ":previous<cr>")
+keymap("n", "'", "`")
+
 keymap("i", "{<cr>", "{<cr>}<esc>O")
 keymap("i", "[<cr>", "[<cr>]<esc>O")
 keymap("i", "(<cr>", "(<cr>)<esc>O")
 keymap("i", "{,", "{<cr>},<esc>O")
-keymap("n", "<leader>N", ":vnew | setlocal nobuflisted buftype=nofile bufhidden=wipe noswapfile<cr>")
 keymap("i", "[,", "[<cr>],<esc>O")
 keymap("i", "(,", "(<cr>),<esc>O")
-keymap("v", "J", ":m '>+1<CR>gv=gv")
-keymap("v", "K", ":m '<-2<CR>gv=gv")
-keymap("n", "<leader>c", ":cwindow<cr>")
-keymap("n", "<leader>C", ":ccl<cr>")
-keymap("n", "[c", ":cp<cr>")
-keymap("n", "]c", ":cn<cr>")
-keymap("n", "[C", ":cfirst<cr>")
-keymap("n", "]C", ":clast<cr>")
-keymap("n", "]b", ":bnext<cr>")
-keymap("n", "[b", ":bprevious<cr>")
-keymap("n", "[t", ":tp<cr>")
-keymap("n", "]t", ":tn<cr>")
-keymap("n", "[T", ":tf<cr>")
-keymap("n", "]T", ":tl<cr>")
 
 --OPTIONS
 local set = vim.opt
 set.wildignore = "**/node_modules/**, **lazy-lock.json"
 set.wildignorecase = true
 set.clipboard:append("unnamedplus")
-set.path:append("src/**")
+set.path:append("src/**, packages/**, apps/**")
 set.wildmenu = true
 set.backup = false
-set.number = true
-set.relativenumber = true
 set.fileencoding = "utf-8"
 set.cursorline = true
 set.undofile = true
+set.termguicolors = true
 set.swapfile = false
 set.updatetime = 50
 set.guicursor = ""
@@ -148,149 +157,6 @@ set.hidden = true
 set.grepprg = "rg --vimgrep --no-heading --smart-case"
 set.grepformat = "%f:%l:%c:%m"
 
---GIT
-require("gitsigns").setup({
-	on_attach = function(bufnr)
-		local gs = package.loaded.gitsigns
-
-		local function map(mode, l, r, opts)
-			opts = opts or {}
-			opts.buffer = bufnr
-			vim.keymap.set(mode, l, r, opts)
-		end
-
-		-- Navigation
-		map("n", "]h", function()
-			if vim.wo.diff then
-				return "]h"
-			end
-			vim.schedule(function()
-				gs.next_hunk()
-			end)
-			return "<Ignore>"
-		end, { expr = true })
-
-		map("n", "[h", function()
-			if vim.wo.diff then
-				return "[h"
-			end
-			vim.schedule(function()
-				gs.prev_hunk()
-			end)
-			return "<Ignore>"
-		end, { expr = true })
-
-		-- Actions
-		map("n", "<leader>hs", gs.stage_hunk)
-		map("n", "<leader>hr", gs.reset_hunk)
-		map("v", "<leader>hs", function()
-			gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
-		end)
-		map("v", "<leader>hr", function()
-			gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-		end)
-		map("n", "<leader>hS", gs.stage_buffer)
-		map("n", "<leader>hu", gs.undo_stage_hunk)
-		map("n", "<leader>hR", gs.reset_buffer)
-		map("n", "<leader>hp", gs.preview_hunk)
-		map("n", "<leader>hb", function()
-			gs.blame_line({ full = true })
-		end)
-		map("n", "<leader>tb", gs.toggle_current_line_blame)
-		map("n", "<leader>hd", gs.diffthis)
-		map("n", "<leader>hD", function()
-			gs.diffthis("~")
-		end)
-		map("n", "<leader>td", gs.toggle_deleted)
-
-		-- Text object
-		map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
-	end,
-})
-
 --LSP
-local lsp_zero = require("lsp-zero")
 
-lsp_zero.on_attach(function(client, bufnr)
-	local opts = { buffer = bufnr, remap = false }
-	lsp_zero.default_keymaps({ buffer = bufnr })
-	vim.keymap.set("n", "gd", function()
-		vim.lsp.buf.definition()
-	end, opts)
-	vim.keymap.set("n", "gD", function()
-		vim.lsp.buf.declaration()
-	end, opts)
-	vim.keymap.set("n", "K", function()
-		vim.lsp.buf.hover()
-	end, opts)
-	vim.keymap.set("n", "gi", function()
-		vim.lsp.buf.implementation()
-	end, opts)
-	vim.keymap.set("n", "go", function()
-		vim.lsp.buf.type_definition()
-	end, opts)
-	vim.keymap.set("n", "gr", function()
-		vim.lsp.buf.rename()
-	end, opts)
-	vim.keymap.set("n", "gs", function()
-		vim.lsp.buf.signature_help()
-	end, opts)
-	vim.keymap.set("n", "gR", function()
-		vim.lsp.buf.references()
-	end, opts)
-	vim.keymap.set("n", "gl", function()
-		vim.diagnostic.open_float()
-	end, opts)
-	vim.keymap.set("n", "]d", function()
-		vim.diagnostic.goto_next()
-	end, opts)
-	vim.keymap.set("n", "[d", function()
-		vim.diagnostic.goto_prev()
-	end, opts)
-	vim.keymap.set("n", "ga", function()
-		vim.lsp.buf.code_action()
-	end, opts)
-	vim.keymap.set("n", "<leader>li", ":LspInfo<cr>")
-	vim.keymap.set("n", "<leader>lr", ":LspRestart<cr>")
-end)
-
-require("mason").setup({})
-require("mason-lspconfig").setup({
-	ensure_installed = {
-		"emmet_language_server",
-		"tsserver",
-		"tailwindcss",
-		"prismals",
-		"lua_ls",
-		"html",
-		"graphql",
-		"cssls",
-	},
-	handlers = {
-		lsp_zero.default_setup,
-		lua_ls = function()
-			require("lspconfig").lua_ls.setup({
-				settings = {
-					Lua = {
-						workspace = {
-							checkThirdParty = false,
-						},
-					},
-				},
-			})
-		end,
-	},
-})
-
-local cmp = require("cmp")
-local cmp_action = require("lsp-zero").cmp_action()
-
-cmp.setup({
-	mapping = cmp.mapping.preset.insert({
-		-- Scroll up and down in the completion documentation
-		["<C-u>"] = cmp.mapping.scroll_docs(-4),
-		["<C-d>"] = cmp.mapping.scroll_docs(4),
-	}),
-})
-
-vim.cmd([[colorscheme torte]])
+-- vim.cmd([[colorscheme solarized]])
