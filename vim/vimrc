@@ -82,15 +82,16 @@ nmap ,r <Plug>(coc-references)
  nmap ,a  <Plug>(coc-codeaction-cursor)
  nmap ,A  <Plug>(coc-codeaction-source)
  nmap <leader>d :CocDiagnostics<cr>
- nnoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-d>zz"
- nnoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-u>zz"
 
  "copilot
  imap <C-L> <Plug>(copilot-accept-word)
 
  "maps
+ nnoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-d>zz"
+ nnoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-u>zz"
+ nnoremap <c-]> <c-]>zz
+ nnoremap <c-t> <c-t>zz
  inoremap jk <esc>
- inoremap kj <esc>
  nnoremap <leader>p :Explore<cr>
  nnoremap <leader>b :b 
  nnoremap ,b :ls<cr>:b 
@@ -134,4 +135,4 @@ nmap ,r <Plug>(coc-references)
 "colors
  set tagfunc=CocTagFunc
  set background=dark
- silent! colorscheme solarized
+ silent! colorscheme retrobox
