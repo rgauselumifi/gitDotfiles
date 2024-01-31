@@ -61,6 +61,8 @@ Plug 'suy/vim-context-commentstring'
 Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'github/copilot.vim'
 Plug 'romainl/vim-cool'
+Plug 'morhetz/gruvbox/'
+Plug 'sainnhe/gruvbox-material'
 call plug#end()
 
 "Coc
@@ -88,12 +90,13 @@ nmap ,r <Plug>(coc-references)
 
  "maps
  nnoremap <leader>w :set wrap!<cr>
+ nnoremap <leader>p :set paste!<cr>
  nnoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-d>zz"
  nnoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-u>zz"
  nnoremap <c-]> <c-]>zz
  nnoremap <c-t> <c-t>zz
  inoremap jk <esc>
- nnoremap <leader>p :Explore<cr>
+ nnoremap <leader>s :Explore<cr>
  nnoremap <leader>b :b 
  nnoremap ,b :ls<cr>:b 
  nnoremap <leader>f :find 
@@ -136,4 +139,4 @@ nmap ,r <Plug>(coc-references)
 "colors
  set tagfunc=CocTagFunc
  set background=dark
- silent! colorscheme retrobox
+ silent! colorscheme gruvbox-material
