@@ -2,7 +2,26 @@
   "suggest.autoTrigger": "trigger",
   "diagnostic.enable": false,
   "diagnostic.autoRefresh": false,
+  "diagnostic.messageDelay": 50,
+  "diagnostic.messageTarget": "float",
   "pullDiagnostic.onSave": false,
   "pullDiagnostic.onChange": false,
   "pullDiagnostic.workspace": false,
+  "eslint.autoFixOnSave": true,
+  "eslint.format.enable": true,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "markdown",
+    "json",
+    "javascript",
+    "typescript",
+    "html",
+    "vue",
+    "yaml",
+    "scss",
+    "less",
+    "graphql",
+    "javascriptreact",
+    "typescriptreact"
+  ]
 }

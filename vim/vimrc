@@ -7,6 +7,8 @@ set path=.,,,src/**,packages/**,apps/**
 set wildignore+=*/node_modules/*,*/dist/*
 set wildignorecase
 set wildmenu
+set laststatus=0
+set ruler
 set nonu
 set showcmd
 set cmdheight=1
@@ -35,7 +37,6 @@ set ignorecase
 set smartcase
 set nowrap
 set hidden
-set laststatus=0
 set grepprg=rg\ --vimgrep\ --smart-case
 set grepformat^=%f:%l:%c:%m
 set autoread
@@ -56,13 +57,13 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'ojroques/vim-oscyank', {'branch': 'main'}
-Plug 'ericbn/vim-solarized'
 Plug 'suy/vim-context-commentstring'
 Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'github/copilot.vim'
 Plug 'romainl/vim-cool'
-Plug 'morhetz/gruvbox/'
-Plug 'sainnhe/gruvbox-material'
+Plug 'ericbn/vim-solarized'
+Plug 'sainnhe/sonokai'
+Plug 'tomasiser/vim-code-dark'
 call plug#end()
 
 "Coc
@@ -83,7 +84,7 @@ nmap ,n <Plug>(coc-rename)
 nmap ,r <Plug>(coc-references)
  nmap ,a  <Plug>(coc-codeaction-cursor)
  nmap ,A  <Plug>(coc-codeaction-source)
- nmap <leader>d :CocDiagnostics<cr>
+ nmap <leader>d :CocDiagnostics<CR><C-w>k
 
  "copilot
  imap <C-L> <Plug>(copilot-accept-word)
@@ -108,13 +109,23 @@ nmap ,r <Plug>(coc-references)
  nnoremap <c-j> :cn<CR>
  nnoremap [a :prev<cr>
  nnoremap ]a :n<cr>
+ nnoremap [A :first<cr>
+ nnoremap ]A :last<cr>
  nnoremap ]b :bnext<cr>
  nnoremap [b :bprevious<cr>
  nnoremap <bs> <c-^>
  nnoremap <c-p> :lprevious<CR>
  nnoremap <c-n> :lnext<CR>
  nnoremap <leader>c :cw<cr>
- nnoremap <leader>l :lw<cr>
+function! CloseLocationLists()
+  windo if &buftype == 'quickfix' || &buftype == 'locationlist'
+  \ | execute 'lclose'
+  \ | endif
+endfunction
+
+nnoremap <leader>l :lclose<cr>
+nnoremap <leader>L :call CloseLocationLists()<cr>
+
  nnoremap ,f mmgggqG`m
  nnoremap ' `
  nnoremap <leader>/ :g//#<left><left>
@@ -139,4 +150,4 @@ nmap ,r <Plug>(coc-references)
 "colors
  set tagfunc=CocTagFunc
  set background=dark
- silent! colorscheme gruvbox-material
+ colorscheme codedark
