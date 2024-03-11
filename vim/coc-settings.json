@@ -8,20 +8,6 @@
   "pullDiagnostic.onChange": false,
   "pullDiagnostic.workspace": false,
   "eslint.autoFixOnSave": true,
-  "eslint.format.enable": true,
-  "coc.preferences.formatOnSaveFiletypes": [
-    "css",
-    "markdown",
-    "json",
-    "javascript",
-    "typescript",
-    "html",
-    "vue",
-    "yaml",
-    "scss",
-    "less",
-    "graphql",
-    "javascriptreact",
-    "typescriptreact"
-  ]
+  "workspace.bottomUpFiletypes": ["javascript", "typescript", "javascriptreact", "typescriptreact"],
+  "workspace.workspaceFolderCheckCwd": false
 }
