@@ -1,16 +1,20 @@
 --OPTIONS
 local set = vim.opt
-set.wildignore = "**/node_modules/**, **lazy-lock.json"
+set.wildignore = "**/node_modules/**, **lazy-lock.json, **/dist/**"
 set.wildignorecase = true
-set.clipboard:append("unnamedplus")
 set.path:append("src/**, packages/**, apps/**, lua/**, after/**")
 set.wildmenu = true
-set.laststatus = 1
+set.laststatus = 2
 set.ruler = true
+vim.cmd("set wc=<c-n>")
 set.backup = false
 set.fileencoding = "utf-8"
+set.signcolumn = "yes"
 set.cursorline = true
-set.cmdheight = 0
+set.cmdheight = 1
+set.pumheight = 8
+set.splitright = true
+set.splitbelow = true
 set.undofile = true
 set.termguicolors = true
 set.swapfile = false
@@ -30,3 +34,6 @@ set.scrolloff = 1
 set.hidden = true
 set.grepprg = "rg --vimgrep --no-heading --smart-case"
 set.grepformat = "%f:%l:%c:%m"
+
+
+vim.cmd([[colorscheme everforest]])
