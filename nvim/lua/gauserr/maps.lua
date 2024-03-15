@@ -24,7 +24,7 @@ keymap("n", "<bs>", "<c-^>", { noremap = true, silent = false })
 keymap("n", "<c-p>", ":lprevious<CR>", { noremap = true, silent = false })
 keymap("n", "<c-n>", ":lnext<CR>", { noremap = true, silent = false })
 keymap("n", "<leader>c", ":cw<cr>", { noremap = true, silent = false })
-keymap("n", "<leader>l", ":lcl<cr>", { noremap = true, silent = false })
+-- keymap("n", "<leader>l", ":lcl<cr>", { noremap = true, silent = false })
 keymap("n", "'", "`", { noremap = true, silent = false })
 keymap("n", "<leader>/", ":g//#<left><left>", { noremap = true, silent = false })
 keymap("v", "J", ":m '>+1<cr>gv=gv", { noremap = true, silent = true })
@@ -43,4 +43,5 @@ keymap(
 	":compiler tsc<cr>:silent! set makeprg=npx\\ tsc\\ --noEmit<cr>:make ",
 	{ noremap = true, silent = false }
 )
-keymap("n", "<c-g>", ":Git", { noremap = true, silent = false })
+vim.api.nvim_set_keymap("n", "<leader>l", ":lclose<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<c-g>", ":Git", { noremap = true, silent = false })
