@@ -2,7 +2,7 @@
 local set = vim.opt
 set.wildignore = "**/node_modules/**, **lazy-lock.json, **/dist/**"
 set.wildignorecase = true
-set.path:append("src/**, packages/**, apps/**, lua/**, after/**")
+set.path:append("src/**, packages/**, apps/**, lua/**, after/**, app/**, pages/**, public/**, styles/**")
 set.wildmenu = true
 set.laststatus = 2
 set.ruler = true
@@ -30,10 +30,14 @@ set.incsearch = true
 set.ignorecase = true
 set.smartcase = true
 set.wrap = false
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "qf", "quickfix", "locationlist" },
+	callback = function()
+		vim.wo.wrap = true
+	end,
+})
+
 set.scrolloff = 1
 set.hidden = true
 set.grepprg = "rg --vimgrep --no-heading --smart-case"
 set.grepformat = "%f:%l:%c:%m"
-
-
-vim.cmd([[colorscheme everforest]])

@@ -65,11 +65,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set("n", ",n", vim.lsp.buf.rename, opts)
 		vim.keymap.set({ "n", "v" }, ",a", vim.lsp.buf.code_action, opts)
 		vim.keymap.set("n", ",r", vim.lsp.buf.references, opts)
-		vim.keymap.set("n", ",f", function()
-			vim.lsp.buf.format({ async = true })
-		end, opts)
-		vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-		vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+		-- vim.keymap.set("n", ",f", function()
+		-- 	vim.lsp.buf.format({ async = true })
+		-- end, opts)
+		-- vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+		-- vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 	end,
 })
 
@@ -148,7 +148,7 @@ vim.diagnostic.config({
 	underline = true,
 	signs = false,
 })
-vim.keymap.set("n", "<leader>d", vim.diagnostic.setloclist)
+-- vim.keymap.set("n", "<leader>d", vim.diagnostic.setloclist)
 
 -- lsp styling
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })

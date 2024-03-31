@@ -14,7 +14,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappings are correct
+vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappings are correctlllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll
 vim.g.maplocalleader = " "
 
 require("lazy").setup({
@@ -22,16 +22,19 @@ require("lazy").setup({
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
-		config = function()
-			local configs = require("nvim-treesitter.configs")
-			configs.setup({
-				ensure_installed = { "lua", "vim", "vimdoc", "javascript", "typescript", "tsx", "html" },
-				sync_install = false,
-				highlight = { enable = true },
-				indent = { enable = true },
-			})
-		end,
 	},
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		after = "nvim-treesitter",
+	},
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		after = "nvim-treesitter",
+	},
+	-- {
+	-- 	"HiPhish/rainbow-delimiters.nvim",
+	-- 	after = "nvim-treesitter",
+	-- },
 	"JoosepAlviste/nvim-ts-context-commentstring",
 	{ "folke/neodev.nvim", opts = {} },
 	"williamboman/mason.nvim",
@@ -51,7 +54,6 @@ require("lazy").setup({
 		"stevearc/conform.nvim",
 		opts = {},
 	},
-
 	{
 		"numToStr/Comment.nvim",
 		config = function()
@@ -67,7 +69,7 @@ require("lazy").setup({
 			require("nvim-surround").setup({})
 		end,
 	},
-	{ "windwp/nvim-ts-autotag", opts = {} },
+	{ "windwp/nvim-ts-autotag" },
 	"github/copilot.vim",
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
@@ -95,13 +97,135 @@ require("lazy").setup({
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
-	"sainnhe/everforest",
 	"tpope/vim-fugitive",
 	"lewis6991/gitsigns.nvim",
-	-- { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
-	-- {
-	--   'nvim-telescope/telescope.nvim',
-	--   tag = '0.1.6',
-	--   dependencies = { 'nvim-lua/plenary.nvim' }
-	-- },
+	{
+		"ibhagwan/fzf-lua",
+		-- optional for icon support
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+	},
+	{
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		opts = {
+			label = {
+				rainbow = {
+					enabled = true,
+					shade = 5,
+				},
+			},
+			highlight = {
+				backdrop = true,
+			},
+			modes = {
+				search = {
+					enabled = true,
+				},
+				char = {
+					enabled = false,
+				},
+			},
+		},
+		keys = {
+			{
+				"R",
+				mode = "o",
+				function()
+					require("flash").remote()
+				end,
+				desc = "Remote Flash",
+			},
+			{
+				"r",
+				mode = { "o", "x" },
+				function()
+					require("flash").treesitter_search()
+				end,
+				desc = "Treesitter Search",
+			},
+		},
+	},
+	{
+		"shortcuts/no-neck-pain.nvim",
+		version = "*",
+		opts = {
+			width = 100,
+			autocmds = {
+				enableOnVimEnter = true,
+				enableOnTabEnter = true,
+				skipEnteringNoNeckPainBuffer = true,
+			},
+			buffers = {
+				right = {
+					enabled = false,
+				},
+			},
+		},
+	},
+	{
+		"folke/trouble.nvim",
+		branch = "dev", -- IMPORTANT!
+		config = function()
+			require("trouble").setup({})
+		end,
+		keys = {
+			{ "<leader>c", "<cmd>Trouble toggle<cr>" },
+			{
+				"<leader>d",
+				"<cmd>Trouble diagnostics toggle<cr>",
+				desc = "Diagnostics (Trouble)",
+			},
+			{
+				"<leader>D",
+				"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+				desc = "Buffer Diagnostics (Trouble)",
+			},
+			{
+				"<leader>ts",
+				"<cmd>Trouble symbols toggle focus=false<cr>",
+				desc = "Symbols (Trouble)",
+			},
+			{
+				"<leader>tr",
+				"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+				desc = "LSP Definitions / references / ... (Trouble)",
+			},
+			{
+				"<leader>l",
+				"<cmd>Trouble loclist toggle<cr>",
+				desc = "Location List (Trouble)",
+			},
+			{
+				"<leader>q",
+				"<cmd>Trouble qflist toggle<cr>",
+				desc = "Quickfix List (Trouble)",
+			},
+			{
+				"<c-p>",
+				"<cmd>Trouble prev<cr>",
+			},
+			{
+				"<c-n>",
+				"<cmd>Trouble next<cr>",
+			},
+			{
+				"[d",
+				"<cmd>Trouble first<cr>",
+			},
+			{
+				"]d",
+				"<cmd>Trouble last<cr>",
+			},
+		},
+	},
+
+	-- themes
+	"sainnhe/everforest",
+	"iruzo/matrix-nvim",
+	"danishprakash/vim-yami",
+	"bcicen/vim-vice",
+	"Mofiqul/vscode.nvim",
+	"water-sucks/darkrose.nvim",
+	"shaunsingh/moonlight.nvim",
 })
+vim.cmd("colorscheme everforest")
