@@ -2,6 +2,7 @@
 local set = vim.opt
 set.wildignore = "**/node_modules/**, **lazy-lock.json, **/dist/**"
 set.wildignorecase = true
+--still need this with fzf?
 set.path:append("src/**, packages/**, apps/**, lua/**, after/**, app/**, pages/**, public/**, styles/**")
 set.wildmenu = true
 set.laststatus = 2
@@ -9,7 +10,7 @@ set.ruler = true
 vim.cmd("set wc=<c-n>")
 set.backup = false
 set.fileencoding = "utf-8"
-set.signcolumn = "yes"
+set.signcolumn = "no"
 set.cursorline = true
 set.cmdheight = 1
 set.pumheight = 8
@@ -30,13 +31,6 @@ set.incsearch = true
 set.ignorecase = true
 set.smartcase = true
 set.wrap = false
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "qf", "quickfix", "locationlist" },
-	callback = function()
-		vim.wo.wrap = true
-	end,
-})
-
 set.scrolloff = 1
 set.hidden = true
 set.grepprg = "rg --vimgrep --no-heading --smart-case"
