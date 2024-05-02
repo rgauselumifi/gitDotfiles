@@ -46,38 +46,38 @@ require("lazy").setup({
 			})
 		end,
 	},
-	{
-		"HiPhish/rainbow-delimiters.nvim",
-		after = "nvim-treesitter",
-		config = function()
-			local rainbow_delimiters = require("rainbow-delimiters")
-
-			vim.g.rainbow_delimiters = {
-				strategy = {
-					[""] = rainbow_delimiters.strategy["global"],
-					commonlisp = rainbow_delimiters.strategy["local"],
-				},
-				query = {
-					[""] = "rainbow-delimiters",
-					lua = "rainbow-blocks",
-				},
-				priority = {
-					[""] = 110,
-					lua = 210,
-				},
-				highlight = {
-          "RainberskiBlue",
-          "RainberskiGreen",
-          "RainberskiRed",
-          "RainberskiCyan",
-          "RainberskiYellow",
-          "RainberskiViolet",
-          "RainberskiMagenta",
-				},
-				blacklist = { "c", "cpp" },
-			}
-		end,
-	},
+	-- {
+	-- 	"HiPhish/rainbow-delimiters.nvim",
+	-- 	after = "nvim-treesitter",
+	-- 	config = function()
+	-- 		local rainbow_delimiters = require("rainbow-delimiters")
+	--
+	-- 		vim.g.rainbow_delimiters = {
+	-- 			strategy = {
+	-- 				[""] = rainbow_delimiters.strategy["global"],
+	-- 				commonlisp = rainbow_delimiters.strategy["local"],
+	-- 			},
+	-- 			query = {
+	-- 				[""] = "rainbow-delimiters",
+	-- 				lua = "rainbow-blocks",
+	-- 			},
+	-- 			priority = {
+	-- 				[""] = 110,
+	-- 				lua = 210,
+	-- 			},
+	-- 			highlight = {
+	--          "RainberskiBlue",
+	--          "RainberskiGreen",
+	--          "RainberskiRed",
+	--          "RainberskiCyan",
+	--          "RainberskiYellow",
+	--          "RainberskiViolet",
+	--          "RainberskiMagenta",
+	-- 			},
+	-- 			blacklist = { "c", "cpp" },
+	-- 		}
+	-- 	end,
+	-- },
 	{ "windwp/nvim-ts-autotag", after = "nvim-treesitter" },
 	"JoosepAlviste/nvim-ts-context-commentstring",
 	{ "folke/neodev.nvim", opts = {} },
@@ -134,6 +134,9 @@ require("lazy").setup({
 				capabilities = lsp_capabilities,
 			})
 			lspconfig.vimls.setup({
+				capabilities = lsp_capabilities,
+			})
+			lspconfig.prismals.setup({
 				capabilities = lsp_capabilities,
 			})
 
@@ -218,10 +221,10 @@ require("lazy").setup({
 			formatters_by_ft = {
 				lua = { { "stylua" } },
 				css = { { "prettierd" } },
-				javascript = { { "eslint_d" } },
-				typescript = { { "eslint_d" } },
-				javascriptreact = { { "eslint_d" } },
-				typescriptreact = { { "eslint_d" } },
+				javascript = { { "eslint_d", "prettierd" } },
+				typescript = { { "eslint_d", "prettierd" } },
+				javascriptreact = { { "eslint_d", "prettierd" } },
+				typescriptreact = { { "eslint_d", "prettierd" } },
 			},
 			format_on_save = {
 				timeout_ms = 100000,
@@ -271,7 +274,7 @@ require("lazy").setup({
 			{
 				"<leader>s",
 				function()
-					require("oil").open_float()
+					require("oil").open()
 				end,
 				desc = "Open Oil",
 			},
@@ -528,6 +531,7 @@ require("lazy").setup({
 						height = 0.5,
 						width = 0.5,
 					},
+					file_ignore_patterns = { "material3.css" },
 					-- preview = {
 					-- 	hide_on_startup = true,
 					-- },
@@ -636,6 +640,22 @@ require("lazy").setup({
 			enable_named_colors = true,
 			enable_tailwind = true,
 		},
+	},
+	"github/copilot.vim",
+	{
+		"CopilotC-Nvim/CopilotChat.nvim",
+		branch = "canary",
+		dependencies = {
+			{ "zbirenbaum/copilot.vim" }, -- or github/copilot.vim
+			{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+		},
+		opts = {
+			debug = false, -- Enable debugging
+		},
+		keys = { {
+			"<leader>Cs",
+			"<cmd>CopilotChatCommitStaged<cr>",
+		} },
 	},
 	"rgauselumifi/alabaster.nvim",
 	{
