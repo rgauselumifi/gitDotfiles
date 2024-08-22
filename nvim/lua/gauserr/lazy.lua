@@ -47,38 +47,38 @@ require("lazy").setup({
       })
     end,
   },
-  -- {
-  -- 	"HiPhish/rainbow-delimiters.nvim",
-  -- 	after = "nvim-treesitter",
-  -- 	config = function()
-  -- 		local rainbow_delimiters = require("rainbow-delimiters")
-  --
-  -- 		vim.g.rainbow_delimiters = {
-  -- 			strategy = {
-  -- 				[""] = rainbow_delimiters.strategy["global"],
-  -- 				commonlisp = rainbow_delimiters.strategy["local"],
-  -- 			},
-  -- 			query = {
-  -- 				[""] = "rainbow-delimiters",
-  -- 				lua = "rainbow-blocks",
-  -- 			},
-  -- 			priority = {
-  -- 				[""] = 110,
-  -- 				lua = 210,
-  -- 			},
-  -- 			highlight = {
-  --          "RainberskiBlue",
-  --          "RainberskiGreen",
-  --          "RainberskiRed",
-  --          "RainberskiCyan",
-  --          "RainberskiYellow",
-  --          "RainberskiViolet",
-  --          "RainberskiMagenta",
-  -- 			},
-  -- 			blacklist = { "c", "cpp" },
-  -- 		}
-  -- 	end,
-  -- },
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    after = "nvim-treesitter",
+    config = function()
+      local rainbow_delimiters = require("rainbow-delimiters")
+
+      vim.g.rainbow_delimiters = {
+        strategy = {
+          [""] = rainbow_delimiters.strategy["global"],
+          commonlisp = rainbow_delimiters.strategy["local"],
+        },
+        query = {
+          [""] = "rainbow-delimiters",
+          lua = "rainbow-blocks",
+        },
+        priority = {
+          [""] = 110,
+          lua = 210,
+        },
+        highlight = {
+          "RainberskiBlue",
+          "RainberskiGreen",
+          "RainberskiRed",
+          "RainberskiCyan",
+          "RainberskiYellow",
+          "RainberskiViolet",
+          "RainberskiMagenta",
+        },
+        blacklist = { "c", "cpp" },
+      }
+    end,
+  },
   { "windwp/nvim-ts-autotag", after = "nvim-treesitter" },
   "JoosepAlviste/nvim-ts-context-commentstring",
   { "folke/neodev.nvim",      opts = {} },
@@ -103,6 +103,7 @@ require("lazy").setup({
           "cssls",
           "eslint",
           "html",
+          "biome",
           "jsonls",
           "tailwindcss",
           "vimls",
@@ -139,6 +140,9 @@ require("lazy").setup({
         capabilities = lsp_capabilities,
       })
       lspconfig.prismals.setup({
+        capabilities = lsp_capabilities,
+      })
+      lspconfig.biome.setup({
         capabilities = lsp_capabilities,
       })
 
@@ -223,14 +227,14 @@ require("lazy").setup({
       formatters_by_ft = {
         lua = { { "stylua" } },
         css = { { "prettierd" } },
-        javascript = { { "eslint_d", "prettierd" } },
-        typescript = { { "eslint_d", "prettierd" } },
-        javascriptreact = { { "eslint_d", "prettierd" } },
-        typescriptreact = { { "eslint_d", "prettierd" } },
+        javascript = { { "biome"} },
+        typescript = { { "biome"} },
+        javascriptreact = { { "biome"} },
+        typescriptreact = { { "biome"} },
       },
       format_on_save = {
         timeout_ms = 100000,
-        lsp_fallback = true,
+        lsp_fallback = false,
       },
     },
     keys = {
