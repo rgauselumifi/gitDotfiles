@@ -66,15 +66,15 @@ require("lazy").setup({
           [""] = 110,
           lua = 210,
         },
-        highlight = {
-          "RainberskiBlue",
-          "RainberskiGreen",
-          "RainberskiRed",
-          "RainberskiCyan",
-          "RainberskiYellow",
-          "RainberskiViolet",
-          "RainberskiMagenta",
-        },
+        -- highlight = {
+        --   "RainberskiBlue",
+        --   "RainberskiGreen",
+        --   "RainberskiRed",
+        --   "RainberskiCyan",
+        --   "RainberskiYellow",
+        --   "RainberskiViolet",
+        --   "RainberskiMagenta",
+        -- },
         blacklist = { "c", "cpp" },
       }
     end,
@@ -99,7 +99,7 @@ require("lazy").setup({
       require("mason-lspconfig").setup({
         ensure_installed = {
           "lua_ls",
-          "tsserver",
+          "ts_ls",
           "cssls",
           "eslint",
           "html",
@@ -118,7 +118,7 @@ require("lazy").setup({
       lspconfig.lua_ls.setup({
         capabilities = lsp_capabilities,
       })
-      lspconfig.tsserver.setup({
+      lspconfig.ts_ls.setup({
         capabilities = lsp_capabilities,
       })
       lspconfig.cssls.setup({
@@ -227,10 +227,10 @@ require("lazy").setup({
       formatters_by_ft = {
         lua = { { "stylua" } },
         css = { { "prettierd" } },
-        javascript = { { "biome"} },
-        typescript = { { "biome"} },
-        javascriptreact = { { "biome"} },
-        typescriptreact = { { "biome"} },
+        javascript = { { "biome" } },
+        typescript = { { "biome" } },
+        javascriptreact = { { "biome" } },
+        typescriptreact = { { "biome" } },
       },
       format_on_save = {
         timeout_ms = 100000,
@@ -384,64 +384,6 @@ require("lazy").setup({
     }
   },
   {
-    "ibhagwan/fzf-lua",
-    -- optional for icon support
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = {
-
-      "default",
-      winopts = {
-        fullscreen = false,
-        preview = {
-          layout = "horizontal",
-          horizontal = "right:60%",
-          winopts = {},
-        },
-      },
-      keymap = {
-        fzf = {
-          ["ctrl-q"] = "toggle-all",
-        },
-      },
-      files = {
-        previewer = false,
-      },
-      buffers = {
-        previewer = false,
-      },
-    },
-    keys = {
-      -- {
-      -- 	"<leader>f",
-      -- 	function()
-      -- 		require("fzf-lua").files()
-      -- 	end,
-      -- 	desc = "FZF Files",
-      -- },
-      -- {
-      -- 	"<leader>g",
-      -- 	function()
-      -- 		require("fzf-lua").live_grep()
-      -- 	end,
-      -- 	desc = "FZF Live Grep",
-      -- },
-      -- {
-      -- 	"<leader>b",
-      -- 	function()
-      -- 		require("fzf-lua").buffers()
-      -- 	end,
-      -- 	desc = "FZF Buffers",
-      -- },
-      -- {
-      -- 	"<leader>Fc",
-      -- 	function()
-      -- 		require("fzf-lua").colorschemes()
-      -- 	end,
-      -- 	desc = "FZF Colorschemes",
-      -- },
-    },
-  },
-  {
     "folke/flash.nvim",
     event = "VeryLazy",
     opts = {
@@ -463,30 +405,15 @@ require("lazy").setup({
         },
       },
     },
-    keys = {
-      {
-        "R",
-        mode = "o",
-        function()
-          require("flash").remote()
-        end,
-        desc = "Remote Flash",
-      },
-      {
-        "r",
-        mode = { "o", "x" },
-        function()
-          require("flash").treesitter_search()
-        end,
-        desc = "Treesitter Search",
-      },
-    },
   },
   {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
       padding = false,
+      warn_no_results = false,
+      open_no_results = true,
+      focus = true
     },
     keys = {
       {
@@ -498,9 +425,7 @@ require("lazy").setup({
       },
       {
         "<leader>d",
-        function()
-          require("trouble").toggle("document_diagnostics")
-        end,
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
         desc = "Trouble LSP Diagnostics",
       },
       {
@@ -515,28 +440,12 @@ require("lazy").setup({
         function()
           require("trouble").next({ skip_groups = true, jump = true })
         end,
-        desc = "Trouble Quickfix",
       },
       {
         "<c-p>",
         function()
-          require("trouble").previous({ skip_groups = true, jump = true })
+          require("trouble").prev({ skip_groups = true, jump = true })
         end,
-        desc = "Trouble Quickfix",
-      },
-      {
-        "[d",
-        function()
-          require("trouble").first({ skip_groups = true, jump = true })
-        end,
-        desc = "Trouble Quickfix",
-      },
-      {
-        "]d",
-        function()
-          require("trouble").last({ skip_groups = true, jump = true })
-        end,
-        desc = "Trouble Quickfix",
       },
       {
         ",r",
@@ -590,23 +499,15 @@ require("lazy").setup({
   {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.6",
-    -- or                              , branch = '0.1.x',
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
-      local trouble = require("trouble.providers.telescope")
+      local open_with_trouble = require("trouble.sources.telescope").open()
       require("telescope").setup({
         defaults = {
-          layout_config = {
-            -- height = 0.5,
-            -- width = 0.5,
-          },
           file_ignore_patterns = { "material3.css" },
-          -- preview = {
-          -- 	hide_on_startup = true,
-          -- },
           mappings = {
-            i = { ["<c-q>"] = trouble.open_with_trouble },
-            n = { ["<c-q>"] = trouble.open_with_trouble },
+            i = { ["<c-q>"] = open_with_trouble },
+            n = { ["<c-q>"] = open_with_trouble },
           },
         },
         pickers = {
@@ -636,7 +537,6 @@ require("lazy").setup({
             override_generic_sorter = true, -- override the generic sorter
             override_file_sorter = true,    -- override the file sorter
             case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
-            -- the default case_mode is "smart_case"
           },
         },
       })
@@ -664,7 +564,7 @@ require("lazy").setup({
         "<cmd>Telescope colorscheme<cr>",
       },
       {
-        "<leader>;",
+        "<leader>F",
         mode = { "n", "v" },
         "<cmd>Telescope resume<cr>",
       },
@@ -693,11 +593,7 @@ require("lazy").setup({
       notify = { enabled = false },
     },
     dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
       "MunifTanjim/nui.nvim",
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
       "rcarriga/nvim-notify",
     },
   },
@@ -710,12 +606,29 @@ require("lazy").setup({
       enable_tailwind = true,
     },
   },
-  "github/copilot.vim",
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    opts = {
+      suggestion = {
+        auto_trigger = true,
+        keymap = {
+          accept = "<M-k>",
+          accept_word = "<M-}>",
+          accept_line = "<M-)>",
+          next = "<M-]>",
+          prev = "<M-[>",
+          dismiss = "<M-j>",
+        },
+      }
+    }
+  },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     branch = "canary",
     dependencies = {
-      { "zbirenbaum/copilot.vim" }, -- or github/copilot.vim
+      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
       { "nvim-lua/plenary.nvim" },  -- for curl, log wrapper
     },
     opts = {
@@ -726,26 +639,16 @@ require("lazy").setup({
       "<cmd>CopilotChatCommitStaged<cr>",
     } },
   },
-  "rgauselumifi/alabaster.nvim",
+  "p00f/alabaster.nvim",
   {
-    "maxmx03/solarized.nvim",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      -- vim.o.background = 'dark' -- or 'light'
-      --
-      -- vim.cmd.colorscheme 'solarized'
-    end,
-  },
-  {
-    "scottmckendry/cyberdream.nvim",
-    lazy = false,
-    priority = 1000,
+    "loctvl842/monokai-pro.nvim",
     opts = {
-      transparent = true,
+      transparent_background = true,
     }
   },
-  "luisiacc/the-matrix.nvim"
+
 })
 
-vim.cmd([[colorscheme alabaster]])
+
+
+vim.cmd([[colorscheme monokai-pro]])

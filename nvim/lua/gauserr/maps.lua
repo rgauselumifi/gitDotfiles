@@ -6,7 +6,7 @@ keymap("n", "<leader>w", ":set wrap!<cr>", { noremap = true, silent = false })
 keymap(
 	"n",
 	"<leader>z",
-	":vsplit ~/.config/gitDotfiles/nvim<CR>:lcd ~/.config/gitDotfiles/nvim<CR>",
+	":vsplit ~/.config/dotfiles/nvim<CR>:lcd ~/.config/dotfiles/nvim<CR>",
 	{ noremap = true, silent = true }
 )
 keymap("n", "<c-d>", "<c-d>zz", { noremap = true, silent = false })
